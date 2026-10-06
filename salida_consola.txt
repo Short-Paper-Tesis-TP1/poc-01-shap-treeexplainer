@@ -1,0 +1,58 @@
+======================================================================
+PASO 1 | INPUTS
+  Filas de entrenamiento : 640
+  Variables de entrada   : 18
+  Balance de la etiqueta : 50.47% en riesgo
+======================================================================
+
+PASO 2 | IDA (LightGBM Booster)
+  Tipo de objeto        : Booster
+  Output de booster.predict -> 0.9285
+  => Es UN escalar. No dice por que.
+/usr/local/lib/python3.12/dist-packages/shap/explainers/_tree.py:632: UserWarning: LightGBM binary classifier with TreeExplainer shap values output has changed to a list of ndarray
+  warnings.warn(
+
+PASO 3 | VUELTA-A (TreeExplainer, modo por defecto)
+  expected_value (base)      : 0.1791
+  suma de los 18 shap_values : 2.3847
+  base + suma                : 2.5638   <-- NO es 0.xx
+  sigmoide(base + suma)      : 0.9285
+  probabilidad del Booster   : 0.9285
+  HALLAZGO: los shap_values estan en LOG-ODDS, no en probabilidad.
+Background dataset has 200 samples but max_samples=100. Subsampling to 100 samples for SHAP value computation. To use all samples, set max_samples=200 when initializing the masker.
+
+PASO 4 | VUELTA-B (model_output='probability' + background)
+  Filas del background        : 200
+  base_value (prob. promedio) : 0.5784
+  suma de contribuciones      : +0.3501
+  base + suma                 : 0.9285
+  probabilidad del Booster    : 0.9285
+  Diferencia                  : 0.000000
+  ADITIVIDAD VERIFICADA       : SI
+
+PASO 5 | DESCOMPOSICION DEL RESULTADO
+  Probabilidad de sobreendeudamiento: 92.85%
+  Promedio poblacional (base)      : 57.84%
+----------------------------------------------------------------------
+  ratio_cuota_ingreso_minimo           0.95   +0.2578  (sube)
+  antiguedad_negocio_meses           173.00   -0.0793  (baja)
+  ahorro_disponible                  290.99   +0.0748  (sube)
+  num_acreedores                       3.00   +0.0602  (sube)
+  ingreso_mensual_promedio          2624.67   +0.0552  (sube)
+  usa_credito_informal                 0.00   -0.0334  (baja)
+  dias_atraso_max_12m                  0.00   -0.0267  (baja)
+  coef_variacion_ingreso               0.32   -0.0178  (baja)
+  gasto_mensual_promedio             911.71   +0.0168  (sube)
+  deuda_total                      42666.10   +0.0128  (sube)
+  num_empleados                        3.00   +0.0114  (sube)
+  tiene_cuenta_bancaria                0.00   +0.0096  (sube)
+  carga_familiar                       1.00   +0.0088  (sube)
+  cuota_mensual_total               1690.02   +0.0064  (sube)
+  formalidad_negocio                   1.00   -0.0052  (baja)
+  ingreso_mes_peor                  1786.63   -0.0040  (baja)
+  nivel_educativo                      4.00   +0.0034  (sube)
+  num_creditos_ultimos_12m             2.00   -0.0006  (baja)
+----------------------------------------------------------------------
+
+PASO 6 | Archivo generado: resultado_poc.json
+======================================================================

@@ -1,0 +1,110 @@
+{
+  "poc_id": "PoC-01-TreeExplainer",
+  "capa_2_deteccion": {
+    "componente": "lightgbm.Booster.predict",
+    "output": {
+      "probabilidad_sobreendeudamiento": 0.9285
+    }
+  },
+  "capa_3_interpretabilidad": {
+    "componente": "shap.TreeExplainer",
+    "model_output": "probability",
+    "background_n": 200,
+    "base_value": 0.5784,
+    "suma_contribuciones": 0.3501,
+    "reconstruccion": 0.9285,
+    "aditividad_ok": true,
+    "contribuciones": [
+      {
+        "variable": "ratio_cuota_ingreso_minimo",
+        "valor": 0.9459,
+        "contribucion": 0.2578
+      },
+      {
+        "variable": "antiguedad_negocio_meses",
+        "valor": 173.0,
+        "contribucion": -0.0793
+      },
+      {
+        "variable": "ahorro_disponible",
+        "valor": 290.9932,
+        "contribucion": 0.0748
+      },
+      {
+        "variable": "num_acreedores",
+        "valor": 3.0,
+        "contribucion": 0.0602
+      },
+      {
+        "variable": "ingreso_mensual_promedio",
+        "valor": 2624.6693,
+        "contribucion": 0.0552
+      },
+      {
+        "variable": "usa_credito_informal",
+        "valor": 0.0,
+        "contribucion": -0.0334
+      },
+      {
+        "variable": "dias_atraso_max_12m",
+        "valor": 0.0,
+        "contribucion": -0.0267
+      },
+      {
+        "variable": "coef_variacion_ingreso",
+        "valor": 0.3193,
+        "contribucion": -0.0178
+      },
+      {
+        "variable": "gasto_mensual_promedio",
+        "valor": 911.7147,
+        "contribucion": 0.0168
+      },
+      {
+        "variable": "deuda_total",
+        "valor": 42666.1014,
+        "contribucion": 0.0128
+      },
+      {
+        "variable": "num_empleados",
+        "valor": 3.0,
+        "contribucion": 0.0114
+      },
+      {
+        "variable": "tiene_cuenta_bancaria",
+        "valor": 0.0,
+        "contribucion": 0.0096
+      },
+      {
+        "variable": "carga_familiar",
+        "valor": 1.0,
+        "contribucion": 0.0088
+      },
+      {
+        "variable": "cuota_mensual_total",
+        "valor": 1690.0187,
+        "contribucion": 0.0064
+      },
+      {
+        "variable": "formalidad_negocio",
+        "valor": 1.0,
+        "contribucion": -0.0052
+      },
+      {
+        "variable": "ingreso_mes_peor",
+        "valor": 1786.635,
+        "contribucion": -0.004
+      },
+      {
+        "variable": "nivel_educativo",
+        "valor": 4.0,
+        "contribucion": 0.0034
+      },
+      {
+        "variable": "num_creditos_ultimos_12m",
+        "valor": 2.0,
+        "contribucion": -0.0006
+      }
+    ]
+  }
+}
